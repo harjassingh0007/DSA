@@ -1,0 +1,1 @@
+void* bSearch (void* key,void* base, int length, int elementSize, int (*compar)(void*,void*));
