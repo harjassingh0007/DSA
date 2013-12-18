@@ -14,14 +14,45 @@ void test_create_double_linkedList(){
     free(list);
 };
 
-void test_insert_node_of_int_type_in_linked_list(){
-	LinkedList *list;
+void test_insert_node__in_linked_list_at_starting(){
+	LinkedList *list = createLinkedList();
     int result , _1 = 1;
-    void *element = calloc(1, sizeof(int));
-    memcpy(element, &_1, sizeof(int));
-    result = insertNode(list,&element,0);
+    result = insertNode(list,&_1,0);
     ASSERT(1 == result);
-    ASSERT(NULL == list->head->next);
-    ASSERT(NULL == list->head->previous);
-    ASSERT(_1 == *(int*)list->head->data);
+    free(list);
 };
+
+
+void test_insert_node_in_linked_list_at_end(){
+    LinkedList *list = createLinkedList();
+    int result , _1 = 1, _2 = 2;
+    insertNode(list, &_1, 0);
+    result = insertNode(list, &_2, 1);
+    ASSERT(1 == result);
+    free(list);
+};
+
+void test_insert_node_in_linked_list_at_end_having_many_nodes(){
+    LinkedList *list = createLinkedList();
+    int result , _1 = 1, _2 = 2;
+    insertNode(list, &_1, 0);
+    insertNode(list, &_1, 1);
+    insertNode(list, &_1, 2);
+    result = insertNode(list, &_2, 3);
+    ASSERT(1 == result);
+    free(list);
+};
+
+void test_insert_node_in_linked_list_in_middle(){
+    LinkedList *list = createLinkedList();
+    int result , _1 = 1, _2 = 2;
+    insertNode(list, &_1, 0);
+    insertNode(list, &_1, 1);
+    insertNode(list, &_1, 2);
+    result = insertNode(list, &_2, 3);
+    ASSERT(1 == result);
+    free(list);
+};
+
+
+

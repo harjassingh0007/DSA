@@ -3,6 +3,8 @@
 
 //create setup, tearDown, fixtureSetup, fixtureTearDown methods if needed
 
-void test_fail(){
-	ASSERT(0);
+void test_push_element_of_int_type_into_a_stack(){
+	int input = 1;
+	push();
+
 }

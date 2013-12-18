@@ -16,4 +16,4 @@ typedef struct
 Process* createProcess(int priority, int size, int totalElements);
 int enqueue(Process *process, void* element);
 int isJobFull(Process *process);
-void *dequeue(Process* process);
+void *dequeue(void* process);

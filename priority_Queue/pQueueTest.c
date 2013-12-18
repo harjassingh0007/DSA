@@ -209,12 +209,15 @@ void test_enqueue_a_job_of_string_type_when_it_will_return_false(){
 
 void test_dequeue_a_job_of_int_type(){
 	Process process[3];
+	void* result;
 	int arr[] = {1,2,3,4,5};
+	Process expected = create_ints(5, arr, 1);
 	process[0] = create_ints(5, arr , 2);
 	process[1] = create_ints(5, arr , 3); 
 	process[2] = create_ints(5, arr , 1);
 	isort(process, 3, sizeof(Process), sortArray);
-	printf("%d\n", process[0].priority);
+	result = dequeue(process);
+	ASSERT(areEqual(expected, *(Process*)result));
 }
 
 

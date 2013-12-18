@@ -1,6 +1,7 @@
 #include "pQueue.h"
 #include <stdlib.h>
 #include <memory.h>
+#include <stdio.h>
 
 Process* createProcess(int priority,int size, int totalElements){
 	Process *process = (Process*)calloc(1, sizeof(Process));
@@ -30,4 +31,10 @@ int enqueue(Process *process, void *element){
 	lastElement = (process->job.starting_address) + ((process->job.rear)*(process->job.each_size));
 	memcpy(lastElement,element,process->job.each_size);
 	return 1;
+}
+
+void* dequeue(void *process){
+ 	Process* process1 = process;
+		++ process1->job.front;
+	return (process1);
 }

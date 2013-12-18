@@ -49,24 +49,24 @@ int main(){
 	fixtureSetup();
 	resetTestCount();
 
-	testStarted("test_create_double_linkedList");
+	testStarted("test_parentheses_having_no_character");
 	setup();
-		test_create_double_linkedList();
+		test_parentheses_having_no_character();
 	tearDown();
 	testEnded();
-	testStarted("test_insert_node__in_linked_list_at_starting");
+	testStarted("test_parentheses_having_no_paranthesis");
 	setup();
-		test_insert_node__in_linked_list_at_starting();
+		test_parentheses_having_no_paranthesis();
 	tearDown();
 	testEnded();
-	testStarted("test_insert_node_in_linked_list_at_end");
+	testStarted("test_parentheses_having_circle_paranthesis");
 	setup();
-		test_insert_node_in_linked_list_at_end();
+		test_parentheses_having_circle_paranthesis();
 	tearDown();
 	testEnded();
-	testStarted("test_insert_node_in_linked_list_in_middle");
+	testStarted("test_parentheses_having_curly_paranthesis");
 	setup();
-		test_insert_node_in_linked_list_in_middle();
+		test_parentheses_having_curly_paranthesis();
 	tearDown();
 	testEnded();
 

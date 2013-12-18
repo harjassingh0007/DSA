@@ -39,5 +39,5 @@ void* dequeue(Queue *queue){
 		queue->front = -1;
 		queue->rear = 0;
 	}
-	return queue->starting_address; //+ queue->front*queue->each_size;
+	return queue->starting_address;
 }
