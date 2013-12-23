@@ -7,13 +7,7 @@ typedef struct
 	int front;
 }Queue;
 
-typedef struct
-{
-	int priority;
-	Queue job;
-}Process;
 
-Process* createProcess(int priority, int size, int totalElements);
-int enqueue(Process *process, void* element);
-int isJobFull(Process *process);
-void *dequeue(void* process);
+Queue* createQueue(int size, int totalElements);
+int enqueue(Queue* queue, void* element);
+void *dequeue(Queue* queue);

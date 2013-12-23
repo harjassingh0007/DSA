@@ -8,84 +8,75 @@
 
 //create setup, tearDown, fixtureSetup, fixtureTearDown methods if needed
 
-Process *data;
-Process *expected;
-
-Process create_ints(int length, int *array,int priority){
+Queue create_ints(int length, int *array){
 	int i;
-	Process intData = *createProcess(priority, sizeof(int), length);
-	for (i = 0; i < intData.job.total_elements; ++i)
+	Queue intData = *createQueue(sizeof(int), length);
+	for (i = 0; i < intData.total_elements; ++i)
 	{
-		((int *)intData.job.starting_address)[i] = array[i];
+		((int *)intData.starting_address)[i] = array[i];
 	}
 	return intData;
 }
 
-Process create_chars(int length, char *array, int priority){
+Queue create_chars(int length, char *array){
 	int i;
-	Process charData = *createProcess(priority, sizeof(char), length);
-	for (i = 0; i < charData.job.total_elements; ++i)
+	Queue charData = *createQueue(sizeof(char), length);
+	for (i = 0; i < charData.total_elements; ++i)
 	{
-		((char *)charData.job.starting_address)[i] = array[i];
+		((char *)charData.starting_address)[i] = array[i];
 	}
 	return charData;
 }
 
 typedef char string[100];
-Process create_strings(int length, string array, int priority){
+Queue create_strings(int length, string array){
 	int i;
-	Process strData = *createProcess(priority, sizeof(string), length);
-	for (i = 0; i < strData.job.total_elements; i++)
+	Queue strData = *createQueue(sizeof(string), length);
+	for (i = 0; i < strData.total_elements; i++)
 	{
-		(*(string *)strData.job.starting_address)[i] = *array+i*sizeof(string);
+		(*(string *)strData.starting_address)[i] = *array+i*sizeof(string);
 	}
 	return strData;
 }
 
 
 
-int areSizesEqual(Process u1, Process u2) {
-	return u1.job.each_size == u2.job.each_size;
+int areSizesEqual(Queue u1, Queue u2) {
+	return u1.each_size == u2.each_size;
 }
 
-int areNumElementsEqual(Process u1, Process u2){
-	return u1.job.total_elements == u2.job.total_elements;
+int areNumElementsEqual(Queue u1, Queue u2){
+	return u1.total_elements == u2.total_elements;
 }
-int areRearEqual(Process u1, Process u2){
-	return u1.job.rear == u2.job.rear;
+int areRearEqual(Queue u1, Queue u2){
+	return u1.rear == u2.rear;
 }
-
-int areFrontEqual(Process u1, Process u2){
-	return u1.job.front == u2.job.front;
-}
-
-int arePriorityEqual(Process u1, Process u2){
-	return u2.priority == u2.priority;
+int areFrontEqual(Queue u1, Queue u2){
+	return u1.front == u2.front;
 }
 
-int size_of_aryUtil(Process a) {
-	return a.job.each_size * a.job.total_elements;
+int size_of_aryUtil(Queue a) {
+	return a.each_size * a.total_elements;
 }
 
-int cmpArrays(Process u1, Process u2) {
-	void *a1 = u1.job.starting_address;
-	void *a2 = u2.job.starting_address;
+int cmpArrays(Queue u1, Queue u2) {
+	void *a1 = u1.starting_address;
+	void *a2 = u2.starting_address;
 	return memcmp(a1,a2,size_of_aryUtil(u1));
 }
 
-int areEqual(Process u1,Process u2){
-    if(!(areSizesEqual(u1,u2) && areNumElementsEqual(u1,u2) && areRearEqual(u1,u2)
-    	&& areFrontEqual(u1,u2)&&arePriorityEqual(u1,u2)))
+int areEqual(Queue u1,Queue u2){
+	if(!(areSizesEqual(u1,u2) && areNumElementsEqual(u1,u2) && areRearEqual(u1,u2) && areFrontEqual(u1,u2)))
 		return 0;
 	return (0 == cmpArrays(u1,u2));
 };
 
-int areEqualStrings(Process u1,Process u2){
+int areEqualStrings(Queue u1,Queue u2){
 	int i, result;
 	void *item1, *item2;
-	for(i = 0; i < u1.job.total_elements; i++){
-		item1 = u1.job.starting_address+(i*u1.job.each_size);
-		item2 = u2.job.starting_address+(i*u2.job.each_size);
+	for(i = 0; i < u1.total_elements; i++){
+		item1 = u1.starting_address+(i*u1.each_size);
+		item2 = u2.starting_address+(i*u2.each_size);
 		result = strcmp(*(string*)item1,*(string*)item2);
 		if(result == 1){
 			return 0;
@@ -94,130 +85,166 @@ int areEqualStrings(Process u1,Process u2){
 		return 1;
 }
 
-int sortArray(void *first, void *second){
-	Process* a = (Process*)first;
-	Process* b = (Process*)second;
-	return a->priority - b->priority;
-}
 
-void test_create_a_job_of_int_type(){
+void test_create_a_queue_of_int_type(){
+	Queue* data;
 	int temp[] = {0,0,0,0,0};
-	Process expected = {1,temp,sizeof(int),5,0,0};
-	data = createProcess(1,sizeof(int), 5);
+	Queue expected = {temp,sizeof(int),5,0,-1};
+	data = createQueue(sizeof(int), 5);
 	ASSERT(1 == areEqual(*data, expected));
 }
 
-void test_create_a_job_of_char_type(){
+void test_create_a_queue_of_char_type(){
+	Queue* data;
 	char temp[] = {0,0,0,0,0};
-	Process expected = {1,temp,sizeof(char),5,0,0};
-	data = createProcess(1,sizeof(char), 5);
+	Queue expected = {temp,sizeof(char),5,0,-1};
+	data = createQueue(sizeof(char), 5);
 	ASSERT(1 == areEqual(*data, expected));
 }
 
-void test_create_a_job_of_string_type(){
+void test_create_a_queue_of_string_type(){
+	Queue* data;
 	string temp[] = {"","","","",""};
-	Process expected = {1,temp,sizeof(string),5,0,0};
-	data = createProcess(1,sizeof(string), 5);
+	Queue expected = {temp,sizeof(string),5,0,-1};
+	data = createQueue(sizeof(string), 5);
 	ASSERT(1 == areEqual(*data, expected));
 }
 
-void test_enqueue_a_job_of_int_type(){
-	Process data;
-	int arr[] = {1,0,0,0,0};
-	int inputArr[] = {0,0,0,0,0};
+void test_enqueue_an_item_into_int_type_queue(){
+	Queue data;
 	int result, element = 1;
-	Process expected = {2, arr, sizeof(int), 5 , 0, 0};
-	data = create_ints(5, inputArr, 2);
+	int arr[] = {0,0,0,0,0};
+	int expArr[] = {1,0,0,0,0};
+	Queue expected = {expArr,sizeof(int),5,0,-1};
+	data = create_ints(5, arr);
+	data.front = -1 , data.rear = 0;
 	result = enqueue(&data, &element);
-	ASSERT(1 == result && areEqual(data, expected));
+	ASSERT(1 == result && areEqual(expected, data));
 }
 
-
-void test_enqueue_a_job_of_char_type(){
-	Process data;
-	char arr[] = {'1',0,0,0,0};
-	char inputArr[] = {0,0,0,0,0};
-	int result;
-	char element = '1';
-	Process expected = {2, arr, sizeof(char), 5 , 0, 0};
-	data = create_chars(5, inputArr, 2);
+void test_enqueue_an_item_into_char_type_queue(){
+	Queue data;
+	char result;
+	int element = '1';
+	char arr[] = {0,0,0,0,0};
+	char expArr[] = {'1',0,0,0,0};
+	Queue expected = {expArr,sizeof(char),5,0,-1};
+	data = create_chars(5, arr);
+	data.front = -1 , data.rear = 0;
 	result = enqueue(&data, &element);
-	ASSERT(1 == result && areEqual(data, expected));
+	ASSERT(1 == result && areEqual(expected, data));
 }
 
-void test_enqueue_a_job_of_string_type(){
-	Process data;
-	string arr[] = {"1",0,0,0,0};
-	string inputArr[] = {0,0,0,0,0};
+void test_enqueue_an_item_into_string_type_queue(){
+	Queue data;
 	int result;
-	string element = "1";
-	Process expected = {2, arr, sizeof(string), 5 , 0, 0};
-	data = create_strings(5, inputArr, 2);
+	string element = "a";
+	string arr[] = {"c","b",0,0,0};
+	string expArr[] = {"c","b","a",0,0};
+	Queue expected = {expArr,sizeof(string),5,3,0};
+	data = create_strings(5, arr);
+	data.front = 0 , data.rear = 2;
 	result = enqueue(&data, &element);
 	ASSERT(1 == result && areEqualStrings(data, expected));
 }
 
-void test_isFull_returns_true(){
-	int result;
-	int arr[] = {1,2,3,4,5}; 
-	Process data = create_ints(5, arr, 1);
-	data.job.rear = 4;
-	result = isJobFull(&data);
-	ASSERT(0 == result);
-}
-
-void test_isFull_returns_false(){
-	int result;
-	int arr[] = {1,2,3,0,0}; 
-	Process data = create_ints(5, arr, 1);
-	data.job.rear = 2;
-	result = isJobFull(&data);
-	ASSERT(1 == result);
-}
-
-void test_enqueue_a_job_of_int_type_when_it_will_return_false(){
-	Process data;
-	int inputArr[] = {1,2,3,4,5};
+void test_enqueue_an_item_into_int_type_queue_when_it_is_full(){
+	Queue data;
 	int result, element = 1;
-	data = create_ints(5, inputArr, 2);
-	data.job.rear = 4;
+	int arr[] = {0,0,0,0,0};
+	data = create_ints(5, arr);
+	data.rear = 4;
 	result = enqueue(&data, &element);
 	ASSERT(0 == result);
 }
 
-void test_enqueue_a_job_of_char_type_when_it_will_return_false(){
-	Process data;
-	char inputArr[] = {'1','2','3','4','5'};
+void test_enqueue_an_item_into_char_type_queue_when_it_is_full(){
+	Queue data;
 	int result;
-	char element = '1';
-	data = create_chars(5, inputArr, 2);
-	data.job.rear = 4;
+	char element = 1;
+	char arr[] = {0,0,0,0,0};
+	data = create_chars(5, arr);
+	data.rear = 4;
 	result = enqueue(&data, &element);
 	ASSERT(0 == result);
 }
 
-void test_enqueue_a_job_of_string_type_when_it_will_return_false(){
-	Process data;
-	string inputArr[] = {"1","2","3","4","5"};
+void test_enqueue_an_item_into_string_type_queue_when_it_is_full(){
+	Queue data;
 	int result;
-	string element = "1";
-	data = create_strings(5, inputArr, 2);
-	data.job.rear = 4;
+	string element = "a";
+	string arr[] = {"","","","",""};
+	data = create_strings(5, arr);
+	data.rear = 4;
 	result = enqueue(&data, &element);
 	ASSERT(0 == result);
 }
 
-void test_dequeue_a_job_of_int_type(){
-	Process process[3];
-	void* result;
-	int arr[] = {1,2,3,4,5};
-	Process expected = create_ints(5, arr, 1);
-	process[0] = create_ints(5, arr , 2);
-	process[1] = create_ints(5, arr , 3); 
-	process[2] = create_ints(5, arr , 1);
-	isort(process, 3, sizeof(Process), sortArray);
-	result = dequeue(process);
-	ASSERT(areEqual(expected, *(Process*)result));
+int compareInts(void *element1, void *element2){
+	return *(int*)element1 - *(int*)element2;
 }
 
+int compareChars(void *element1, void *element2){
+	return *(char*)element1 - *(char*)element2;
+}
 
+int compareStrings(void *element1, void *element2){
+	return strcmp(*(string*)element1,*(string*)element2) ;
+}
+
+void test_dequeue_an_item_from_int_type_queue(){
+	int arr[] = {4,5,1,3};
+    void* result;
+   	Queue queue = create_ints(4, arr);
+   	queue.front = 0, queue.rear = 4;
+
+	isort(queue.starting_address, queue.total_elements, queue.each_size, compareInts);
+    result = dequeue(&queue);
+    ASSERT(*(int*)result == 1);
+
+	isort(queue.starting_address, queue.total_elements, queue.each_size, compareInts);
+    result = dequeue(&queue);
+    ASSERT(*(int*)result == 3);
+
+	isort(queue.starting_address, queue.total_elements, queue.each_size, compareInts);
+    result = dequeue(&queue);
+    ASSERT(*(int*)result == 4);
+}
+
+void test_dequeue_an_item_from_char_type_queue(){
+	char arr[] = {'4','5','1','3'};
+    void* result;
+   	Queue queue = create_chars(4, arr);
+   	queue.front = 0, queue.rear = 4;
+
+	isort(queue.starting_address, queue.total_elements, queue.each_size, compareChars);
+    result = dequeue(&queue);
+    ASSERT(*(char*)result == '1');
+
+	isort(queue.starting_address, queue.total_elements, queue.each_size, compareChars);
+    result = dequeue(&queue);
+    ASSERT(*(char*)result == '3');
+
+	isort(queue.starting_address, queue.total_elements, queue.each_size, compareChars);
+    result = dequeue(&queue);
+    ASSERT(*(char*)result == '4');
+}
+
+void test_dequeue_an_item_from_string_type_queue(){
+	string arr[] = {"4","5","1","3"};
+    void* result;
+   	Queue queue = create_strings(4, arr);
+   	queue.front = 0, queue.rear = 4;
+
+	isort(queue.starting_address, queue.total_elements, queue.each_size, compareStrings);
+    result = dequeue(&queue);
+    ASSERT( strcmp(*(string*)result,"1"));
+
+	isort(queue.starting_address, queue.total_elements, queue.each_size, compareStrings);
+    result = dequeue(&queue);
+    ASSERT(strcmp(*(string*)result,"3"));
+
+	isort(queue.starting_address, queue.total_elements, queue.each_size, compareStrings);
+    result = dequeue(&queue);
+    ASSERT(strcmp(*(string*)result,"4"));
+}

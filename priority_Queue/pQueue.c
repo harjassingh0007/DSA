@@ -2,39 +2,44 @@
 #include <stdlib.h>
 #include <memory.h>
 #include <stdio.h>
+#include "../insertionSort/isort.h"
 
-Process* createProcess(int priority,int size, int totalElements){
-	Process *process = (Process*)calloc(1, sizeof(Process));
-	process->job.starting_address = calloc(size, totalElements);
-	process->job.each_size = size;
-	process->job.total_elements = totalElements;
-	process->job.front = 0;
-	process->job.rear = 0;
-	process->priority = priority;
-	return process;
+Queue* createQueue(int size, int totalElements){
+	Queue *queue = (Queue*)calloc(1, sizeof(Queue));
+	queue->starting_address = calloc(size, totalElements);
+	queue->each_size = size;
+	queue->total_elements = totalElements;
+	queue->front = -1;
+	queue->rear = 0;	
+	return queue;
 }
 
-int isJobFull(Process *process){
-	if(process->job.rear == process->job.total_elements-1){
+int isQueueFull(Queue *queue){
+	if(queue->rear == queue->total_elements-1){
 		return 0; 
 	}
 	return 1;
 }
 
-int enqueue(Process *process, void *element){
+int enqueue(Queue* queue, void* element){
 	void* lastElement;
-	if(isJobFull(process) == 0)
+	if(isQueueFull(queue) == 0)
 		return 0;
-	if(process->job.rear > 0){
-		process->job.rear = (process->job.rear) + 1;
+	if(queue->rear > 0){
+		queue->rear = (queue->rear) + 1;
 	}
-	lastElement = (process->job.starting_address) + ((process->job.rear)*(process->job.each_size));
-	memcpy(lastElement,element,process->job.each_size);
+	lastElement = (queue->starting_address) + ((queue->rear)*(queue->each_size));
+	memcpy(lastElement,element,queue->each_size);
 	return 1;
 }
 
-void* dequeue(void *process){
- 	Process* process1 = process;
-		++ process1->job.front;
-	return (process1);
+void* dequeue(Queue *queue){
+    if(queue->front == queue->rear)
+            return NULL;
+	queue->front = (queue->front + 1) % queue->total_elements;
+	if(queue->front == queue->rear){
+		queue->front = -1;
+		queue->rear = 0;
+	}
+	return queue->starting_address + (queue->front-1)*queue->each_size;
 }

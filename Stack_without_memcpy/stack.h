@@ -6,5 +6,9 @@ typedef struct
 	int top;
 }Stack;
 
-void* create(int size, int length);
-int push();
+Stack* create(int size, int length);
+int push(Stack *stack,void *element);
+void *pop(Stack *stack);
+void *top(Stack *stack);
+int isEmpty(Stack *stack);
+int isFull(Stack *stack);

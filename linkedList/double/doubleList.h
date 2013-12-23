@@ -13,4 +13,5 @@ typedef char String[256];
 
 LinkedList* createLinkedList();
 int insertNode(LinkedList* list,void* element,int index);
-Node* removeNode(LinkedList* list,int index);
+void* removeNode(LinkedList* list,int index);
+void dispose(LinkedList *list);

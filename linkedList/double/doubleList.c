@@ -9,7 +9,13 @@ LinkedList* createLinkedList() {
     return linkedList;
 };
 
+void insertNodeInBetween(LinkedList* linkedList,int index){
+
+}
+
+
 int insertNode(LinkedList* linkedList,void* element,int index){
+    int i = 0;
     Node* nodeToInsert = calloc(1,sizeof(Node));
     nodeToInsert->data = element;
     if(index == 0){
@@ -27,5 +33,19 @@ int insertNode(LinkedList* linkedList,void* element,int index){
         linkedList->length++;
        return 1;
     }
+    if(index > 0 && index < linkedList->length){
+        insertNodeInBetween(linkedList,index);      
+        return 1;
+    }
     return 0;
+}
+
+void *removeNode(LinkedList *list, int index){
+    Node* temp = calloc(1, sizeof(Node));
+    temp = list->head->next;
+    if(index == 0){
+        list->head = temp;
+        return list->head->data;
+    }
+    // return NULL;
 }
