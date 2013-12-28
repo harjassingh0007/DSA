@@ -109,6 +109,11 @@ int main(){
 		test_check_hasNext_using_iterator();
 	tearDown();
 	testEnded();
+	testStarted("test_check_getNext_using_iterator");
+	setup();
+		test_check_getNext_using_iterator();
+	tearDown();
+	testEnded();
 
 	summarizeTestCount();
 	fixtureTearDown();

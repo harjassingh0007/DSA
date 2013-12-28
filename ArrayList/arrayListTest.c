@@ -142,3 +142,11 @@ void test_check_hasNext_using_iterator(){
     remove(internsPtr, 0);
     ASSERT(0 == it.hasNext(&it));
 }
+
+void test_check_getNext_using_iterator(){
+    Iterator it = getIterator(internsPtr);
+    insert(internsPtr, 0, &prateek);
+    insert(internsPtr, 1, &ji);
+    ASSERT(18 == (*(Intern*)(it.next(&it))).age);
+    ASSERT(17 == (*(Intern*)(it.next(&it))).age);
+}
