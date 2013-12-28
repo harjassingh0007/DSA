@@ -104,6 +104,11 @@ int main(){
 		test_search_element_from_arrayList_from_starting_index();
 	tearDown();
 	testEnded();
+	testStarted("test_check_hasNext_using_iterator");
+	setup();
+		test_check_hasNext_using_iterator();
+	tearDown();
+	testEnded();
 
 	summarizeTestCount();
 	fixtureTearDown();

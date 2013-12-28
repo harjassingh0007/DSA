@@ -136,3 +136,9 @@ void test_search_element_from_arrayList_from_starting_index(){
 	ASSERT(0 == result);
 }
 
+void test_check_hasNext_using_iterator(){
+    Iterator it = getIterator(internsPtr);
+    insert(internsPtr, 0, &prateek);
+    remove(internsPtr, 0);
+    ASSERT(0 == it.hasNext(&it));
+}
