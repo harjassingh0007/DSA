@@ -1,7 +1,7 @@
 #include "arrayList.h"
 #include <stdlib.h>
 
-ArrayList create(int capacity) {
+ArrayList createArrayList(int capacity) {
 	ArrayList list;
 	list.base = (void*)malloc(sizeof(void*) * capacity);
 	list.capacity = capacity;
@@ -31,7 +31,7 @@ void increaseCapacity(ArrayList *list) {
 	}	
 }
 
-int insert(ArrayList *list, int index, void* data) {
+int insertList(ArrayList *list, int index, void* data) {
 	if (list == NULL) return 0;
 	if (index < 0 || index > list->length) 
 		return 0;
@@ -59,6 +59,10 @@ void shiftElementsLeftIfNeeded(ArrayList *list, int index) {
     }
 }
 
+int ArrayList_add(ArrayList *list,void *data){
+    return insertList(list, list->length, data);
+}
+
 int remove(ArrayList *list, int index){
 	if (index < 0 || index >= list->length) 
 		return 0;
@@ -67,7 +71,7 @@ int remove(ArrayList *list, int index){
 	return 1;
 }
 
-int search(ArrayList *list, void *element, compare cmpFunc){
+int search(ArrayList *list, void *element, compareFunc cmpFunc){
 	int i;
     for(i = 0;i < list->length;i++){
         if(0 == cmpFunc(element,list->base[i]))
@@ -95,7 +99,7 @@ Iterator getIterator(ArrayList* list){
     return it;
 }
 
-void dispose(ArrayList *list) {
+void disposeList(ArrayList *list) {
 	free(list->base);
 }
 

@@ -49,14 +49,14 @@ int main(){
 	fixtureSetup();
 	resetTestCount();
 
-	testStarted("test_arr_contains_no_elements");
-	setup();
-		test_arr_contains_no_elements();
-	tearDown();
-	testEnded();
 	testStarted("test_arr_contains_1_elements");
 	setup();
 		test_arr_contains_1_elements();
+	tearDown();
+	testEnded();
+	testStarted("test_arr_contains_more_than_1_elements");
+	setup();
+		test_arr_contains_more_than_1_elements();
 	tearDown();
 	testEnded();
 

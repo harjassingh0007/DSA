@@ -49,29 +49,9 @@ int main(){
 	fixtureSetup();
 	resetTestCount();
 
-	testStarted("test_add_record_when_mapCode_is_Null_in_list");
+	testStarted("test_insert_data_at_root");
 	setup();
-		test_add_record_when_mapCode_is_Null_in_list();
-	tearDown();
-	testEnded();
-	testStarted("test_add_record_in_the_list");
-	setup();
-		test_add_record_in_the_list();
-	tearDown();
-	testEnded();
-	testStarted("test_add_2_records_in_the_list");
-	setup();
-		test_add_2_records_in_the_list();
-	tearDown();
-	testEnded();
-	testStarted("test_add_3_records_in_the_list");
-	setup();
-		test_add_3_records_in_the_list();
-	tearDown();
-	testEnded();
-	testStarted("test_get_data_from_list");
-	setup();
-		test_get_data_from_list();
+		test_insert_data_at_root();
 	tearDown();
 	testEnded();
 

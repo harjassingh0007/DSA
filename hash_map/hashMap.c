@@ -48,6 +48,18 @@ int put(HashMap *map, void *key, void *data){
     return 1;
 }
 
+void* get_hashMap(HashMap *map, void *key){
+    int bucket_index;
+    DoubleList *list;
+    HashNode *hash_node;
+    bucket_index = (map->getHashCode(key)) % map->capacity;
+    list = (DoubleList*)get(map->buckets, bucket_index);
+    hash_node = getData(*list, key, map->compare);
+    if(hash_node){
+        return hash_node->key;
+    }
+    return NULL;
+}
 
 
 

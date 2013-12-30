@@ -6,19 +6,20 @@ typedef struct {
 	int length;
 } ArrayList;
 
-typedef int (*compare)(void* first,void *second);
+typedef int (*compareFunc)(void* first,void *second);
 
-ArrayList create(int capacity);
+ArrayList createArrayList(int capacity);
 
-int insert(ArrayList *list, int index, void* data);
+int insertList(ArrayList *list, int index, void* data);
 
 void* get(ArrayList *list, int index);
 
+int ArrayList_add(ArrayList *list,void *data);
+
 int remove(ArrayList *list, int index);
 
-int search(ArrayList *list, void *element,compare cmpFunc);
+int search(ArrayList *list, void *element,compareFunc cmpFunc);
 
 Iterator getIterator(ArrayList* list);
 
-
-void dispose(ArrayList *list);
+void disposeList(ArrayList *list);
