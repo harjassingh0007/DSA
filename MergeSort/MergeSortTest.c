@@ -4,7 +4,8 @@
 //create setup, tearDown, fixtureSetup, fixtureTearDown methods if needed
 
 int compareInt(void* first, void* second){
-	return *(int*)first == *(int*)second;
+	printf("%d  %d\n", *(int*)first ,*(int*)second);
+	return *(int*)first - *(int*)second;
 }
 
 void test_sort_int_type_array(){
