@@ -79,6 +79,16 @@ int main(){
 		test_remove_data_from_list();
 	tearDown();
 	testEnded();
+	testStarted("test_remove_data_from_list_");
+	setup();
+		test_remove_data_from_list_();
+	tearDown();
+	testEnded();
+	testStarted("test_remove_data_from_list_when_not_found");
+	setup();
+		test_remove_data_from_list_when_not_found();
+	tearDown();
+	testEnded();
 
 	summarizeTestCount();
 	fixtureTearDown();

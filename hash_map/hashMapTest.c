@@ -78,3 +78,28 @@ void test_remove_data_from_list(){
 	ASSERT(put(&map, &id_2, &taj.name));
 	ASSERT(0 == remove_hashMap(&map, &id_2));
 }
+
+void test_remove_data_from_list_(){
+	Student harjas = {10,"harjas"};
+	Student taj = {20,"Taj"};
+	Student tanbir = {30,"Tanbir"};
+	int id_1 = 10;
+	int id_2 = 20;
+	int id_3 = 30;
+	HashMap map = createHashMap(getHashCode, cmpInts, 10);
+	ASSERT(put(&map, &id_1, &harjas.name));
+	ASSERT(put(&map, &id_2, &taj.name));
+	ASSERT(put(&map, &id_3, &tanbir.name));
+	ASSERT(1 == remove_hashMap(&map, &id_3));
+	ASSERT(1 == remove_hashMap(&map, &id_2));	
+}
+
+
+void test_remove_data_from_list_when_not_found(){
+	Student harjas = {10,"harjas"};
+	int id_1 = 10;
+	int id_2 = 20;
+	HashMap map = createHashMap(getHashCode, cmpInts, 10);
+	ASSERT(put(&map, &id_1, &harjas.name));
+	ASSERT(0 == remove_hashMap(&map, &id_2));
+}

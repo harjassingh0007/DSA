@@ -61,8 +61,20 @@ void* get_hashMap(HashMap *map, void *key){
 
 int remove_hashMap(HashMap *map, void *key){
     int bucket_index;
-
-    return 1;
+    int i = 0;
+    DoubleList *list;
+    Iterator it;
+    HashNode *hash_node;
+    bucket_index = (map->getHashCode(key)) % map->capacity;
+    list = (DoubleList*)get(map->buckets, bucket_index);
+    it = dList_getIterator(list);
+    while(it.hasNext(&it)){
+        hash_node = it.next(&it);
+        if(0 == map->compare(hash_node->key,key))
+                 break;        
+        i++;
+    }
+    return deleteList(list, i);
 }
 
 
