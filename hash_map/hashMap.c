@@ -23,11 +23,6 @@ HashMap createHashMap(HashCodeGenerator getHashCode, cmpFunc cmp, int capacity){
 	return map;
 }
 
-
-void* getHashObject(HashMap *map,void *key){
-    return NULL;
-};
-
 HashNode* createHashNode(void *key, void *value){
     HashNode *hash_node = malloc(sizeof(HashMap));
     hash_node->key = key;
@@ -49,14 +44,17 @@ int put(HashMap *map, void *key, void *data){
 }
 
 void* get_hashMap(HashMap *map, void *key){
-    int bucket_index;
+    int bucket_index, i;
     DoubleList *list;
+    node *Node;
     HashNode *hash_node;
     bucket_index = (map->getHashCode(key)) % map->capacity;
     list = (DoubleList*)get(map->buckets, bucket_index);
-    hash_node = getData(*list, key, map->compare);
-    if(hash_node){
-        return hash_node->key;
+    Node = (node*)list->head;
+    for(i = 0; i < list->length; i++){
+            hash_node = (HashNode*)Node->data;
+        if (!map->compare(key ,hash_node->key)) return hash_node->value;
+        Node = Node->next;
     }
     return NULL;
 }

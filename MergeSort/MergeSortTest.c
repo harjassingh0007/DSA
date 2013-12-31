@@ -4,7 +4,6 @@
 //create setup, tearDown, fixtureSetup, fixtureTearDown methods if needed
 
 int compareInt(void* first, void* second){
-	printf("%d  %d\n", *(int*)first ,*(int*)second);
 	return *(int*)first - *(int*)second;
 }
 
