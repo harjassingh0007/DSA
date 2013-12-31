@@ -67,3 +67,14 @@ void test_get_data_from_list(){
 	ASSERT(put(&map, &id_2, &taj.name));
 	ASSERT(0 == get_hashMap(&map, &harjas.id));
 }
+
+void test_remove_data_from_list(){
+	Student harjas = {10,"harjas"};
+	Student taj = {20,"Taj"};
+	int id_1 = 10;
+	int id_2 = 20;
+	HashMap map = createHashMap(getHashCode, cmpInts, 10);
+	ASSERT(put(&map, &id_1, &harjas.name));
+	ASSERT(put(&map, &id_2, &taj.name));
+	ASSERT(0 == remove_hashMap(&map, &id_2));
+}

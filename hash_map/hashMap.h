@@ -14,3 +14,5 @@ HashMap createHashMap(HashCodeGenerator getHashCode,cmpFunc cmp,int capacity);
 int put(HashMap *mapCode, void *key, void *data);
 
 void* get_hashMap(HashMap* map, void* key);
+
+int remove_hashMap(HashMap* map, void* key);

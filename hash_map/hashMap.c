@@ -3,7 +3,7 @@
 #include "D:/DSA/doublelist/doubleList.h"
 #include <stdlib.h>
 
-typedef struct hn {
+typedef struct{
         void* key;
         void* value;
 } HashNode;
@@ -34,8 +34,8 @@ int put(HashMap *map, void *key, void *data){
 	DoubleList *listOfObjects;
     HashNode* hash_node;
     int bucketIndex, hashCode;
-    if(map == NULL || key == NULL) return 0;
-        return 1;
+    if(map == NULL || key == NULL) 
+        return 0;
     bucketIndex = (map->getHashCode(key)) % map->capacity;
     hash_node = createHashNode(key, data);
     listOfObjects = (DoubleList*)get(map->buckets, bucketIndex);
@@ -59,7 +59,11 @@ void* get_hashMap(HashMap *map, void *key){
     return NULL;
 }
 
+int remove_hashMap(HashMap *map, void *key){
+    int bucket_index;
 
+    return 1;
+}
 
 
 
