@@ -3,6 +3,8 @@
 #include "D:/DSA/doublelist/doubleList.h"
 #include <stdlib.h>
 
+
+
 typedef struct{
         void* key;
         void* value;
@@ -75,6 +77,48 @@ int remove_hashMap(HashMap *map, void *key){
         i++;
     }
     return deleteList(list, i);
+}
+
+
+Iterator HashMap_keys(HashMap *map){
+    Iterator it1;
+    Iterator it2;
+    Iterator result;
+    HashNode *data;
+    DoubleList list = create();
+    it1 = getIterator(map->buckets);
+    while(it1.hasNext(&it1)){
+        it2 = dList_getIterator(it1.next(&it1));
+        while(it2.hasNext(&it2)){
+           data = it2.next(&it2);
+           insert(&list, list.length, data->key);
+        }
+    }
+    result = dList_getIterator(&list);
+    return result;
+}
+
+void createListForEachBucket(void *bucket){
+        DoubleList list;
+        list  = create();
+        *(DoubleList*)bucket = list;
+}
+
+void rehash(HashMap *map){
+    void *key,*value;
+    int i, newLength = map->capacity * 2;
+    Iterator Keys = HashMap_keys(map);
+    for(i = map->capacity; i < newLength;i++){
+        ArrayList_add(map->buckets, malloc(sizeof(DoubleList)));
+        insertList((ArrayList*)map->buckets, map->capacity,createListForEachBucket);
+    }
+    map->capacity = newLength;    
+    while(Keys.hasNext(&Keys)){
+        key = Keys.next(&Keys);
+        value = get_hashMap(map, key);
+        remove_hashMap(map , key);
+        put(map, key, value);
+    }
 }
 
 

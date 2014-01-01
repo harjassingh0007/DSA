@@ -103,3 +103,26 @@ void test_remove_data_from_list_when_not_found(){
 	ASSERT(put(&map, &id_1, &harjas.name));
 	ASSERT(0 == remove_hashMap(&map, &id_2));
 }
+
+int hashFun(void *key){
+        return *(int*)key;
+};
+int areKeyEqual(void* key1 , void* key2 ){
+        return *(int*)key1 - *(int*)key2;
+}
+void get_keys_from_list(){
+    HashMap map = createHashMap(hashFun, areKeyEqual,4);
+    Iterator it;
+    Student harjas = {10,"harjas"};
+	Student taj = {20,"Taj"};
+	Student tanbir = {30,"Tanbir"};
+	ASSERT(put(&map, &harjas.id, &harjas.name));
+    ASSERT(put(&map, &taj.id, &taj.name));
+    ASSERT(put(&map, &tanbir.id, &tanbir.name));
+    it = HashMap_keys(&map);
+    ASSERT(10 == *(int*)it.next(&it));
+    ASSERT(20 == *(int*)it.next(&it));
+    ASSERT(30 == *(int*)it.next(&it));
+}
+
+
